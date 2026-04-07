@@ -2,7 +2,10 @@
 
   <!-- ═══ HEADER ═══ -->
   <header class="header">
-    <h1>BIENVENUE <span style="font-weight:300">SUR VOTRE</span><br><strong>BORNE PASSE NAVIGO</strong></h1>
+    <h1>
+      BIENVENUE <span style="font-weight:300">SUR VOTRE</span><br>
+      <strong>BORNE PASSE NAVIGO</strong>
+    </h1>
 
     <div class="header-logos">
 
@@ -24,7 +27,7 @@
 
       <!-- République tunisienne -->
       <div class="logo-idf">
-        <div class="idf-top">République tunisienee</div>
+        <div class="idf-top">République tunisienne</div>
         <div class="idf-bottom">mobilités 🚶</div>
       </div>
 
@@ -50,9 +53,9 @@
       </div>
     </div>
 
-    <!-- Une seule carte centrée -->
+    <!-- Carte recharge -->
     <div class="options">
-      <button class="btn-option teal recharge-card">
+      <button class="btn-option teal recharge-card" (click)="toggleOffers()">
         <svg viewBox="0 0 52 52" fill="none">
           <rect x="4" y="11" width="44" height="30" rx="5" fill="white" opacity="0.9"/>
           <rect x="4" y="20" width="44" height="7" fill="white" opacity="0.45"/>
@@ -67,7 +70,24 @@
       </button>
     </div>
 
-   
+    <!-- Liste des offres -->
+    <div *ngIf="showOptions" class="offers-box">
+      <h2>Choisissez une formule</h2>
+
+      <div
+        class="offer-card"
+        *ngFor="let offer of offers"
+        [class.selected]="selectedOffer?.label === offer.label"
+        (click)="selectOffer(offer)"
+      >
+        <p><strong>{{ offer.label }}</strong></p>
+        <p>{{ offer.price }} DT</p>
+      </div>
+
+      <button class="pay-btn" [disabled]="!selectedOffer" (click)="goToPayment()">
+        Payer
+      </button>
+    </div>
 
   </main>
 </div>

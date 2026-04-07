@@ -22,8 +22,8 @@ export class RechargeComponent {
 
   constructor(private router: Router) {}
 
-  openOffers() {
-    this.showOptions = true;
+  toggleOffers() {
+    this.showOptions = !this.showOptions;
   }
 
   selectOffer(offer: any) {
