@@ -1,0 +1,24 @@
+<div class="page">
+  <h1>Paiement</h1>
+
+  <div *ngIf="offer; else noOffer">
+    <p><strong>Offre choisie :</strong> {{ offer.label }}</p>
+    <p><strong>Prix :</strong> {{ offer.price }} DT</p>
+
+    <label for="cardCode">Entrez votre code de carte</label>
+    <input
+      id="cardCode"
+      type="text"
+      [(ngModel)]="cardCode"
+      placeholder="Ex: 123456"
+    />
+
+    <button (click)="validatePayment()">Confirmer le paiement</button>
+
+    <p>{{ message }}</p>
+  </div>
+
+  <ng-template #noOffer>
+    <p>Aucune offre sélectionnée.</p>
+  </ng-template>
+</div>
