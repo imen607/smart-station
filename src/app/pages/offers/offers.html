@@ -1,0 +1,48 @@
+<div class="monitor">
+ <header class="header">
+    <h1>BIENVENUE <span style="font-weight:300">SUR VOTRE</span><br><strong>BORNE MASSAR</strong></h1>
+
+    <div class="header-logos">
+
+      <!-- Navigo -->
+       <div class="logo-box">
+      <div class="logo-navigo">
+        <div class="navigo-circle">M</div>
+        <span>MASSAR</span>
+      </div>
+      </div>
+
+      <!-- STS -->
+       <div class="logo-box">
+       <img src="assets/sts.png" alt="navigo" class="logo-img">
+       </div>
+
+      <!-- République tunisienne -->
+       <div class="logo-box">
+      <img src="assets/rup.png" alt="navigo" class="logo-img">
+       </div>
+    </div>
+  </header>
+<div class="offers-page">
+  <h1>Choisissez une formule</h1>
+
+  <div class="offers-list">
+    <div
+      class="offer-card"
+      *ngFor="let offer of offers"
+      [ngClass]="{ selected: selectedOffer?.label === offer.label }"
+      (click)="selectOffer(offer)"
+    >
+      <h3>{{ offer.label }}</h3>
+      <p>{{ offer.price }} DT</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="back-btn" (click)="goBack()">Retour</button>
+    <button class="pay-btn" [disabled]="!selectedOffer" (click)="goToPayment()">
+      Payer
+    </button>
+  </div>
+</div>
+</div>
