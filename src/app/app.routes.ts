@@ -8,6 +8,6 @@ export const routes: Routes = [
   { path: '', redirectTo: 'recharge', pathMatch: 'full' },
   {path:'home', component:HomeComponent},
   {path:'recharge/:uid', component: RechargeComponent},
-   { path: 'payment', component: PaymentComponent },
+   { path: 'payment/:uid', component: PaymentComponent },
     { path: 'offers/:uid', component: OffersComponent }
 ];
