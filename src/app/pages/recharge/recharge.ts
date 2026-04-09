@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recharge',
@@ -7,10 +7,25 @@ import { Router } from '@angular/router';
   templateUrl: './recharge.html',
   styleUrl: './recharge.css'
 })
-export class RechargeComponent {
-  constructor(private router: Router) {}
+export class RechargeComponent implements OnInit {
+  uid: string = '';
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.uid = this.route.snapshot.paramMap.get('uid') || '';
+    console.log('UID reçu dans recharge :', this.uid);
+  }
 
   goToOffers() {
-    this.router.navigate(['/offers']);
+    if (!this.uid) {
+      console.log('UID introuvable');
+      return;
+    }
+
+    this.router.navigate(['/offers', this.uid]);
   }
 }

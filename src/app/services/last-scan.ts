@@ -8,7 +8,6 @@ import { map } from 'rxjs/operators';
 export class LastScanService {
   private db = inject(Database);
 
-  // ✅ Lire le dernier scan (toujours retourner uid propre)
   getLastScan() {
     return objectVal<{ uid: string }>(ref(this.db, 'lastScan')).pipe(
       map((data: any) => ({
@@ -17,12 +16,10 @@ export class LastScanService {
     );
   }
 
-  // ✅ Récupérer une carte
   getCard(uid: string) {
     return objectVal(ref(this.db, `cards/${uid}`));
   }
 
-  // ✅ Recharge carte
   async rechargeCard(uid: string, currentBalance: number, amount: number) {
     const newBalance = currentBalance + amount;
 
@@ -38,7 +35,22 @@ export class LastScanService {
     });
   }
 
-  // ✅ Reset UID (IMPORTANT pour éviter redirection auto)
+  async saveSubscription(uid: string, subscription: any) {
+    await update(ref(this.db, `cards/${uid}`), {
+      subscription: subscription
+    });
+
+    await push(ref(this.db, 'transactions'), {
+      uid,
+      type: 'subscription',
+      offerLabel: subscription.offerLabel,
+      amount: subscription.price,
+      startAt: subscription.startAt,
+      endAt: subscription.endAt,
+      date: Date.now()
+    });
+  }
+
   async resetUID() {
     await set(ref(this.db, 'lastScan/uid'), '');
   }

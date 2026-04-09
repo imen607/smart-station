@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgFor, NgClass } from '@angular/common';
 
 @Component({
@@ -9,8 +9,9 @@ import { NgFor, NgClass } from '@angular/common';
   templateUrl: './offers.html',
   styleUrl: './offers.css'
 })
-export class OffersComponent {
+export class OffersComponent implements OnInit {
   selectedOffer: any = null;
+  uid: string = '';
 
   offers = [
     { label: 'Valable 2 heures', price: 2, duration: '2h' },
@@ -19,7 +20,15 @@ export class OffersComponent {
     { label: 'Valable 1 mois', price: 70, duration: '1 mois' }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.uid = this.route.snapshot.paramMap.get('uid') || '';
+    console.log('UID reçu dans offers :', this.uid);
+  }
 
   selectOffer(offer: any) {
     this.selectedOffer = offer;
@@ -27,13 +36,15 @@ export class OffersComponent {
 
   goToPayment() {
     if (!this.selectedOffer) return;
+    if (!this.uid) return;
 
-    this.router.navigate(['/payment'], {
+    this.router.navigate(['/payment', this.uid], {
       state: { offer: this.selectedOffer }
     });
   }
 
   goBack() {
-    this.router.navigate(['/recharge']);
+    if (!this.uid) return;
+    this.router.navigate(['/recharge', this.uid]);
   }
 }
